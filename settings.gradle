@@ -1,3 +1,4 @@
 rootProject.name = 'mini-test-wwt'
 
 include 'auth-api'
+include 'data-api'
