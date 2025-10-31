@@ -1,0 +1,41 @@
+volumes:
+  bett-data:
+    name: "DATA-STORAGE"
+
+networks:
+  bett-net:
+    driver: bridge
+
+services:
+# DATABASE
+  psql-db:
+    image: postgres:16.1-alpine3.19
+    networks:
+      - bett-net
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: auth-service
+      POSTGRES_PASSWORD: password
+    volumes:
+      - bett-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+# AUTH SERVICE
+  auth-api:
+    depends_on:
+      - psql-db
+    build: ./auth-api/
+    ports:
+    - "8080:8080"
+    environment:
+      JWT_SECRET: defaultSecretKey12345678901234567890
+      INTERNAL_TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXRhLXNlcnZpY2UiLCJleHAiOjE3Njc0MjUyMDB9.qW1cYkcqZz-D2Gj8_P4rIgK9STFtcDhZeC9l-TTkS7Y
+    networks:
+      - bett-net
+# DATA SERVICE
+  data-api:
+    build: ./data-api/
+    environment:
+      INTERNAL_TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXRhLXNlcnZpY2UiLCJleHAiOjE3Njc0MjUyMDB9.qW1cYkcqZz-D2Gj8_P4rIgK9STFtcDhZeC9l-TTkS7Y
+    networks:
+      - bett-net
