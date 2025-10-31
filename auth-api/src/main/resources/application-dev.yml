@@ -1,0 +1,18 @@
+spring:
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      quiet-period: 100ms
+      poll-interval: 200ms
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth_db
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+JWT_SECRET : defaultSecretKey12345678901234567890
+INTERNAL_TOKEN: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXRhLXNlcnZpY2UiLCJleHAiOjE3Njc0MjUyMDB9.qW1cYkcqZz-D2Gj8_P4rIgK9STFtcDhZeC9l-TTkS7Y

@@ -1,0 +1,27 @@
+# SPRING CONFIG
+spring:
+  profiles:
+    active: dev
+  datasource:
+    hikari:
+      pool-name: hikari$pool
+      minimum-idle: 2
+      maximum-pool-size: 200
+      connection-timeout: 1000
+    username: auth-service
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+# SERVER CONFIG
+server:
+  port: 8080
+  compression:
+    mime-types: application/json
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 2
